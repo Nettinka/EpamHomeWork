@@ -1,6 +1,6 @@
-public with sharing class AccountTriggerHandler {
+global without sharing class AccountTriggerHandler {
     public static void onInsertAccount(List<Account> accounts){
-        AccountUpdateHelper.onInsertAccount(accounts);
+        AccountInsertHelper.onInsertAccount(accounts);
     }
 
     public static void onUpdateAccount(List<Account> accounts, Map<Id, Account> oldAcc){

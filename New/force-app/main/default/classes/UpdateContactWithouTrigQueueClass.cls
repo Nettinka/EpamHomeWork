@@ -1,13 +1,14 @@
-public with sharing class UpdateContactWithouTriggerQueuebleJobClass implements Queueable{
+public with sharing class UpdateContactWithouTrigQueueClass implements Queueable{
     List<Account> accountsList;
     
-    public UpdateContactWithouTriggerQueuebleJobClass(List<Account> accs) {
+    public UpdateContactWithouTrigQueueClass(List<Account> accs) {
         this.accountsList = accs;
     }
     public void execute(QueueableContext context) {
         List<Account> onlyFullAdressAcc = new List<Account>();
+        List<Contact> contactsToUpdate = new List<Contact>();
         Map<Id,List<Contact>> accountContactMap = new Map<Id,List<Contact>>();
-        for(Account acc : onlyFullAdressAcc){
+        for(Account acc : accountsList){
             if(acc.BillingAddress != null){
                 onlyFullAdressAcc.add(acc);
             }
@@ -20,6 +21,16 @@ public with sharing class UpdateContactWithouTriggerQueuebleJobClass implements 
         {
             accountContactMap.put(acc.id, acc.Contacts);
         }
+
+        for(Id key : accountContactMap.keySet()){
+            List<Contact> contacts = accountContactMap.get(key);
+            if(accMap.get(key).BillingAddress != null){
+                CollectUpdatedContact col = new CollectUpdatedContact(contacts, 'Queue');
+                contactsToUpdate.addAll(col.collectContact());               
+            }
+        }
+
+        update contactsToUpdate;
 
     }
 

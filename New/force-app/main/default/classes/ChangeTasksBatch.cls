@@ -5,6 +5,7 @@ global without sharing class ChangeTasksBatch implements Database.Batchable<sObj
 
     public void execute(Database.BatchableContext bc, List<Task> tasks){
         List<Account> accounts = new List<Account>();
+        List<Task> taskForUpdate = new List<Task>();
         List<Id> accId = new List<Id>();
         for(Task tas : tasks){
             accId.add(tas.WhatId);
@@ -17,10 +18,11 @@ global without sharing class ChangeTasksBatch implements Database.Batchable<sObj
             t.Account_Owner__c = accMap.get(t.WhatId).Name;
             t.Is_Synced__c = true;
             accMap.get(t.WhatId).Updated_By_Task__c = true;
+            taskForUpdate.add(t);
         }
 
         List<Account> accForUpdate = accMap.values();
-        update tasks;
+        update taskForUpdate;
         update accForUpdate;
 
     }

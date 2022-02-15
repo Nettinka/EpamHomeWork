@@ -1,5 +1,5 @@
 global without sharing class CreateTaskForAccountAsync {
-    @future(callout=true)
+    @future
     public static void createTask(List<Id> newAcc){
         List<Account> accounts = [SELECT Id, Name, BillingAddress FROM Account WHERE Id IN : newAcc];
         List<Task> tasks = new List<Task>();

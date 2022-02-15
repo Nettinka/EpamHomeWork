@@ -1,7 +1,7 @@
-global class ChageContactFromAccountBatch implements Database.Batchable<Contact>{
-    
-    global Iterable<Contact> start(Database.BatchableContext bc) {
-        return new CustomContactcInterable();
+global without sharing class UpdateContactMailingAdressIterableBatch implements Database.Batchable<Contact>{
+    global Iterable<Contact> start(Database.BatchableContext bc) { // Class ChageContactFromAccountBatch must implement the method: System.Iterable<Contact> Database.Batchable<Contact>.start(Database.BatchableContext) (1:14)
+        List<Contact> listContacts= [SELECT Id, Is_Synced__c, MailingAddress FROM Contact WHERE Is_Synced__c = false];
+        return listContacts;
     }
 
     global void execute(Database.BatchableContext bc, List<Contact> scope){

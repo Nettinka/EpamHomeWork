@@ -16,11 +16,8 @@ global without sharing class UpdateContactWItoutTriggerFutureCLass {
         for(Id key : accountContactMap.keySet()){
             List<Contact> contacts = accountContactMap.get(key);
             if(accMap.get(key).BillingAddress != null){
-                for(Contact con : contacts){
-                    con.Is_Synced__c = false;
-                    con.Processed_By_Future__c = true;
-                    contactsToUpdate.add(con);
-                }
+                CollectUpdatedContact col = new CollectUpdatedContact(contacts, 'Future');
+                contactsToUpdate.addAll(col.collectContact());               
             }
         }
 
