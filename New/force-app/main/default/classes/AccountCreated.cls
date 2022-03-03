@@ -13,3 +13,8 @@ global without sharing class AccountCreated {
         insert taskForinsert;
     }
 }
+<<<<<<< Updated upstream
+=======
+
+//test ok
+>>>>>>> Stashed changes

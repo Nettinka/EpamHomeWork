@@ -26,3 +26,8 @@ global without sharing class AccountUpdated {
 
     
 }
+<<<<<<< Updated upstream
+=======
+
+//test ok (random not checked)
+>>>>>>> Stashed changes

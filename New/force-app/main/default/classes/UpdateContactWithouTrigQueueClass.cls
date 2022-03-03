@@ -1,0 +1,40 @@
+public with sharing class UpdateContactWithouTrigQueueClass implements Queueable{
+    List<Account> accountsList;
+    
+    public UpdateContactWithouTrigQueueClass(List<Account> accs) {
+        this.accountsList = accs;
+    }
+    public void execute(QueueableContext context) {
+        List<Account> onlyFullAdressAcc = new List<Account>();
+        List<Contact> contactsToUpdate = new List<Contact>();
+        Map<Id,List<Contact>> accountContactMap = new Map<Id,List<Contact>>();
+        for(Account acc : accountsList){
+            if(acc.BillingAddress != null){
+                onlyFullAdressAcc.add(acc);
+            }
+        }
+        Map<Id,Account> accMap = new Map<Id,Account>(onlyFullAdressAcc);
+
+        List<Account> lstAccount = [SELECT Id, Name, BillingAddress, 
+        (SELECT Id, Name, Is_Synced__c, Processed_By_Future__c FROM Contacts)FROM Account WHERE Id IN : accMap.keySet()];
+
+        for(Account acc : lstAccount)
+        {
+            accountContactMap.put(acc.id, acc.Contacts);
+        }
+
+        for(Id key : accountContactMap.keySet()){
+            List<Contact> contacts = accountContactMap.get(key);
+            if(accMap.get(key).BillingAddress != null){
+                CollectUpdatedContact col = new CollectUpdatedContact(contacts, 'Queue');
+                contactsToUpdate.addAll(col.collectContact());               
+            }
+        }
+
+        if(contactsToUpdate.size() > 0) update contactsToUpdate;
+
+    }
+
+}
+
+//test ok
