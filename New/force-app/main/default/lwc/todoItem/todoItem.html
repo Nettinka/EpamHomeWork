@@ -1,0 +1,70 @@
+<template>
+    <template if:true={todo}>
+        <lightning-layout>
+          <!--<div class="image">
+            <c-image-for-todo record-id={todo.Id} selectedsobject="Todo__c" where-field="Todo__c.Id"></c-image-for-todo> Попытка вставить img
+          </div>-->
+            <div class="union slds-box">
+                <div class="card">
+                    <article class="slds-tile slds-media">
+                      <div class="slds-media__figure">
+                        <span class="slds-icon_container" title="img">
+                          <svg class="slds-icon slds-icon-standard-groups" aria-hidden="true">
+                            <use xlink:href="/assets/icons/action-sprite/svg/symbols.svg#description"></use>
+                          </svg>
+                        </span>
+                      </div>
+                      <div class="slds-media__body">
+                        <p class="slds-tile__title slds-truncate" title={todo.Title__c} style="font-weight:bold;">
+                          {todo.Title__c}
+                        </p>
+                        <div class="slds-tile__detail">
+                          <dl class="slds-list_horizontal slds-wrap">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Second Label">Description</dt>
+                            <dd class="slds-item_detail slds-truncate" title="Description for second label">{todo.Description__c}</dd>
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First Label">Deadline</dt>
+                            <dd class="slds-item_detail slds-truncate" title="Description for first label">{todo.Date_of_completion__c}</dd>
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First Label">Is Done</dt>
+                            <dd class="slds-item_detail slds-truncate" title="Description for first label">
+                              <div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                  <div class="slds-checkbox">
+                                    <input type="checkbox" name="options" id="checkbox-unique-id-87" checked={todo.IsDone__c} />
+                                    <label class="slds-checkbox__label" for="checkbox-unique-id-83">
+                                      <span class="slds-checkbox_faux"></span>
+                                      <span class="slds-form-element__label"></span>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </dd>
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First Label">Priority</dt>
+                            <dd class="slds-item_detail slds-truncate" title="Description for first label">{todo.Priority__c}</dd>
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First Label">Category</dt>
+                            <dd class="slds-item_detail slds-truncate" title="Description for first label">{todo.Category__c}</dd>
+                          </dl>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                  <div class="btngroup">
+                    <div class="slds-button-group" role="group">
+                      <div>
+                        <button class="slds-button slds-button_neutral slds-button_first" onclick={handleEdit}>Edit</button>
+                      </div>
+                      <div>
+                        <button class="slds-button slds-button_brand slds-button_last" onclick={handleDelete}>Delete</button>
+                      </div>
+                    </div>
+                  </div>   
+            </div>
+            <template if:true={clickEdit}>
+                <c-edit-todo-form record-id={todo.Id} selectedsobject="Todo__c" where-field="Todo__c.Id" onedittodo={handleEditEvent} onclosetodo={closeModal}></c-edit-todo-form>
+            </template>
+            <template if:true={clickDelete} >
+                <c-confirmation-action-window record-id={todo.Id} selectedsobject="Todo__c" where-field="Todo__c.Id" oncancledelete={closeConfirmWindow} ondeletetodo={handleDeleteRecord}>                
+                </c-confirmation-action-window>
+            </template>
+        </lightning-layout>
+    </template>
+</template>

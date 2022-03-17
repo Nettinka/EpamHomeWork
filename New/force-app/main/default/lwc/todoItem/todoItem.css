@@ -1,0 +1,18 @@
+
+.union {
+    position: relative;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+}
+.card {
+	margin: 0 auto;
+	width: calc(67% - 24px);
+	display: inline-block;
+}
+.btngroup {	
+	width: calc(33% - 24px);
+	display: inline-block;
+}

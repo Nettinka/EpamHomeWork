@@ -5,7 +5,7 @@
       "default": true
     }
   ],
-  "name": "New",
+  "name": "Todolist",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "52.0"

@@ -1,0 +1,47 @@
+<template>
+    <lightning-card
+        title="Search Todos"
+        icon-name="standart:search"
+    >
+        <div class="slds-var-m-around_medium">
+            <lightning-layout
+                vertical-align="end"
+                class="slds-var-m-bottom_small"
+            >
+                <lightning-layout-item flexibility="grow">
+                    <lightning-input
+                        type="search"
+                        onchange={handleKeyChange}
+                        label="Search"
+                        value={searchKey}
+                    ></lightning-input>
+                </lightning-layout-item>
+
+                <lightning-layout-item class="slds-var-p-left_xx-small">
+                    <lightning-button
+                        label="New Todo"
+                        onclick={handleAdd}
+                    ></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+        <lightning-layout-item>
+            <template if:true={todos}>
+                <template for:each={todos} for:item="todo">
+                    <c-todo-item todo={todo} key={todo.Id} onchangelist={handleChangeList}>
+                    </c-todo-item>
+                </template>
+            </template> 
+        </lightning-layout-item>
+        <lightning-layout-item>
+            <template if:true={error}>
+                <c-error-panel errors={error}></c-error-panel>
+            </template>
+        </lightning-layout-item>
+        <lightning-layout-item >
+            <template if:true={clickAdd} >
+                <c-edit-todo-form onedittodo={addRecord} onclosetodo={closeModal}></c-edit-todo-form>
+            </template>
+        </lightning-layout-item>        
+    </lightning-card>
+</template>
